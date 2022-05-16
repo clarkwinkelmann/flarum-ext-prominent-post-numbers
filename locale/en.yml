@@ -1,0 +1,9 @@
+clarkwinkelmann-prominent-post-numbers:
+    admin:
+        settings:
+            prefix: Prefix
+            prefixPlaceholder: Leave empty to customize via the translator
+
+    views:
+        # This value is used when the prefix setting is empty
+        format: "{number}"
