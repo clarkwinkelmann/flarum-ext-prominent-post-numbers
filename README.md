@@ -10,6 +10,8 @@ You can configure the prefix to be put in front of the number in the settings (d
 
 If you want to translate the prefix or use a suffix, you can leave the prefix field blank and instead customize the `clarkwinkelmann-prominent-post-numbers.views.format` translation value that contains the `{number}` replacement pattern.
 
+You need to clear Flarum's cache after changing the prefix or translation because the value is copied in the TextFormatter optimized parser.
+
 ## Installation
 
     composer require clarkwinkelmann/flarum-ext-prominent-post-numbers
