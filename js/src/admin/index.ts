@@ -4,6 +4,11 @@ app.initializers.add('prominent-post-numbers', () => {
     app.extensionData
         .for('clarkwinkelmann-prominent-post-numbers')
         .registerSetting({
+            setting: 'prominentPostNumberFloating',
+            type: 'switch',
+            label: app.translator.trans('clarkwinkelmann-prominent-post-numbers.admin.settings.floating'),
+        })
+        .registerSetting({
             setting: 'prominentPostNumberPrefix',
             type: 'text',
             label: app.translator.trans('clarkwinkelmann-prominent-post-numbers.admin.settings.prefix'),

@@ -1,5 +1,11 @@
-.Post-header .item-number {
-    float: right;
+.prominent-post-numbers-floating(@config-prominent-post-numbers-floating);
+.prominent-post-numbers-floating(true) {
+    .Post-header .item-number {
+        float: right;
+    }
+}
+.prominent-post-numbers-floating(false) {
+    // nothing
 }
 
 // Copy .username style from mention list to post number

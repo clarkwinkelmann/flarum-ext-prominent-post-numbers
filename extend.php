@@ -16,6 +16,9 @@ return [
     new Extend\Locales(__DIR__ . '/locale'),
 
     (new Extend\Settings())
+        ->registerLessConfigVar('config-prominent-post-numbers-floating', 'prominentPostNumberFloating', function ($value) {
+            return $value ? 'true' : 'false';
+        })
         ->default('prominentPostNumberPrefix', '#')
         ->serializeToForum('prominentPostNumberFormat', 'prominentPostNumberPrefix', function ($prefix) {
             if (!$prefix) {

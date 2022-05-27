@@ -15,7 +15,9 @@ app.initializers.add('prominent-post-numbers', () => {
         // @ts-ignore
         const post = this.attrs.post as Post;
 
-        items.add('number', prominentPostNumber(post));
+        // We want to add it just before PostMeta, unfortunately PostMeta doesn't have a priority
+        // Luckily it's the first item without a priority so priority 1 should put us just before
+        items.add('number', prominentPostNumber(post), 1);
     });
 
     extend(PostPreview.prototype, 'view', function (vdom) {
