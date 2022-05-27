@@ -32,7 +32,10 @@ app.initializers.add('prominent-post-numbers', () => {
                 });
             }
 
-            preview.children.splice(1, 0, prominentPostNumber(this.attrs.post));
+            preview.children.splice(1, 0, prominentPostNumber(this.attrs.post), {
+                tag: '#', // The space must be inserted in vdom way to be valid
+                children: ' ',
+            });
         });
     });
 
@@ -44,7 +47,8 @@ app.initializers.add('prominent-post-numbers', () => {
             return;
         }
 
-        // It's simpler to retrieve the number from the data-attribute, because the href would not contain it for first post
+        // It's simpler to retrieve the number from the data-attribute
+        // Trying to read the href would be more complicated because first post link would not contain the number
         const number = parseInt(this.attrs['data-number']);
 
         const routePrefix = app.route('discussion', {
