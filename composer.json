@@ -19,7 +19,8 @@
         }
     ],
     "support": {
-        "source": "https://github.com/clarkwinkelmann/flarum-ext-prominent-post-numbers"
+        "source": "https://github.com/clarkwinkelmann/flarum-ext-prominent-post-numbers",
+        "forum": "https://discuss.flarum.org/d/31150"
     },
     "autoload": {
         "psr-4": {

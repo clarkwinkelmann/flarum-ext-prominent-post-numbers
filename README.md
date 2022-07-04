@@ -1,6 +1,6 @@
 # Prominent Post Numbers
 
-[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/clarkwinkelmann/flarum-ext-prominent-post-numbers/blob/master/LICENSE.md) [![Latest Stable Version](https://img.shields.io/packagist/v/clarkwinkelmann/flarum-ext-prominent-post-numbers.svg)](https://packagist.org/packages/clarkwinkelmann/flarum-ext-prominent-post-numbers) [![Total Downloads](https://img.shields.io/packagist/dt/clarkwinkelmann/flarum-ext-prominent-post-numbers.svg)](https://packagist.org/packages/clarkwinkelmann/flarum-ext-prominent-post-numbers) [![Donate](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.me/clarkwinkelmann)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/clarkwinkelmann/flarum-ext-prominent-post-numbers/blob/main/LICENSE.txt) [![Latest Stable Version](https://img.shields.io/packagist/v/clarkwinkelmann/flarum-ext-prominent-post-numbers.svg)](https://packagist.org/packages/clarkwinkelmann/flarum-ext-prominent-post-numbers) [![Total Downloads](https://img.shields.io/packagist/dt/clarkwinkelmann/flarum-ext-prominent-post-numbers.svg)](https://packagist.org/packages/clarkwinkelmann/flarum-ext-prominent-post-numbers) [![Donate](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.me/clarkwinkelmann)
 
 This extension makes post numbers visible on the post and in mentions.
 
@@ -31,3 +31,4 @@ Support is offered on a "best effort" basis through the Flarum community thread.
 
 - [GitHub](https://github.com/clarkwinkelmann/flarum-ext-prominent-post-numbers)
 - [Packagist](https://packagist.org/packages/clarkwinkelmann/flarum-ext-prominent-post-numbers)
+- [Discuss](https://discuss.flarum.org/d/31150)
