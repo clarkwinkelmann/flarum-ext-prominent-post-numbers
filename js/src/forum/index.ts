@@ -4,7 +4,7 @@ import extractText from 'flarum/common/utils/extractText';
 import Post from 'flarum/common/models/Post';
 import Link from 'flarum/common/components/Link';
 import CommentPost from 'flarum/forum/components/CommentPost';
-import PostPreview from "flarum/forum/components/PostPreview";
+import PostPreview from 'flarum/forum/components/PostPreview';
 
 function prominentPostNumber(post: Post) {
     return m('span.ProminentPostNumber', (app.forum.attribute<string>('prominentPostNumberFormat') || '').replace('{number}', post.number() + ''));
