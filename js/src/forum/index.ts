@@ -62,10 +62,21 @@ app.initializers.add('prominent-post-numbers', () => {
             return;
         }
 
-        const discussionSlug = this.attrs.href.substr(routePrefix.length).split('/')[0];
+        const discussionSlug = this.attrs.href.substring(routePrefix.length).split('/')[0];
 
         const post = app.store.all<Post>('posts').find(post => {
-            return post.number() === number && post.discussion()?.slug() === discussionSlug;
+            if (post.number() !== number) {
+                return false;
+            }
+
+            const discussion = post.discussion();
+
+            // Can't use ?. operator to call slug() below because the relation can also be false
+            if (!discussion) {
+                return false;
+            }
+
+            return discussion.slug() === discussionSlug;
         });
 
         // If the post can't be found, ignore
