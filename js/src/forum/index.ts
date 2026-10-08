@@ -1,6 +1,5 @@
 import app from 'flarum/forum/app';
 import {extend} from 'flarum/common/extend';
-import extractText from 'flarum/common/utils/extractText';
 import Post from 'flarum/common/models/Post';
 import Link from 'flarum/common/components/Link';
 import CommentPost from 'flarum/forum/components/CommentPost';
@@ -11,6 +10,7 @@ function prominentPostNumber(post: Post) {
 }
 
 app.initializers.add('prominent-post-numbers', () => {
+    // Modify the regular posts shown in the stream
     extend(CommentPost.prototype, 'headerItems', function (items) {
         // @ts-ignore
         const post = this.attrs.post as Post;
@@ -20,20 +20,24 @@ app.initializers.add('prominent-post-numbers', () => {
         items.add('number', prominentPostNumber(post), 1);
     });
 
-    extend(PostPreview.prototype, 'view', function (vdom) {
+    // Modify the previews that appear when hovering a mention
+    extend(PostPreview.prototype, 'view', function (vdom: any) {
         vdom.children.forEach(preview => {
             if (!preview || !preview.attrs || !preview.attrs.className || preview.attrs.className.indexOf('PostPreview-content') === -1) {
                 return;
             }
 
             if (!this.attrs.post.user()) {
+                // If there's no author, remove the .username element that just contains [deleted]
                 preview.children.forEach((child, index) => {
-                    if (child && child.tag === 'span' && child.text === extractText(app.translator.trans('core.lib.username.deleted_text'))) {
+                    if (child && child.attrs && child.attrs.className === 'username') {
                         preview.children.splice(index, 1);
                     }
                 });
             }
 
+            // Add the post number and a space
+            // Even if the username label has been removed it shouldn't matter if there are then 2 spaces
             preview.children.splice(1, 0, prominentPostNumber(this.attrs.post), {
                 tag: '#', // The space must be inserted in vdom way to be valid
                 children: ' ',
@@ -41,6 +45,7 @@ app.initializers.add('prominent-post-numbers', () => {
         });
     });
 
+    // Modify the backlinks that appear at the bottom of a mentioned post
     // There's no easy way to override Mention's template in addMentionedByList / CommentPost.prototype.footerItems
     // To avoid re-implementing the full method, we'll cheat by hooking into Link directly
     extend(Link.prototype, 'view', function (vdom) {
@@ -94,7 +99,7 @@ app.initializers.add('prominent-post-numbers', () => {
 
         // Remove [deleted] text
         vdom.children.forEach((child, index) => {
-            if (child && child.tag === 'span' && child.text === extractText(app.translator.trans('core.lib.username.deleted_text'))) {
+            if (child && child.attrs && child.attrs.className === 'username') {
                 vdom.children.splice(index, 1);
             }
         });
@@ -104,7 +109,7 @@ app.initializers.add('prominent-post-numbers', () => {
 // We don't need to validate or invalidate the tag here because Mention's original filter still runs
 // We'll just change the display name
 export function filterPostMentions(tag: any) {
-    const post = app.store.getById('posts', tag.getAttribute('id'));
+    const post = app.store.getById<Post>('posts', tag.getAttribute('id'));
 
     if (post) {
         const user = post.user();

@@ -3,13 +3,12 @@
 namespace ClarkWinkelmann\ProminentPostNumbers;
 
 use Flarum\Locale\Translator;
-use Flarum\Post\CommentPost;
 use Flarum\Settings\SettingsRepositoryInterface;
 use s9e\TextFormatter\Configurator;
 
 class ConfigureMentions
 {
-    public function __invoke(Configurator $configurator)
+    public function __invoke(Configurator $configurator): void
     {
         if (!$configurator->tags->exists('POSTMENTION')) {
             return;
@@ -29,6 +28,10 @@ class ConfigureMentions
 
         $originalTemplate = (string)$tag->getTemplate();
 
+        // Add rendering points to display our new prefix/suffix parameters, and the number itself
+        // The prefix/suffix is set above using renderer parameters
+        // The number is already part of the attributes set in TextFormatter by the Mentions extension
+        // Only the displayname will need to be customized during rendering to remove the [deleted] placeholder
         $tag->setTemplate(str_replace(
             '<xsl:value-of select="@displayname"/>',
             '<xsl:value-of select="$MENTION_NUMBER_PREFIX"/><xsl:value-of select="@number"/><xsl:value-of select="$MENTION_NUMBER_SUFFIX"/> <xsl:value-of select="@displayname"/>',
@@ -36,22 +39,13 @@ class ConfigureMentions
 
         $tag->filterChain
             // This filter must run after the original for the javascript side to work as expected, so we place it in second place in the array
-            ->insert(1, [static::class, 'addPostIdEvenWhenNoAuthor'])
+            // Because there's nothing to do on the PHP side, we use a dummy callback
+            ->insert(1, [static::class, 'dummyFilter'])
             ->setJS('function(tag) { return flarum.extensions["clarkwinkelmann-prominent-post-numbers"].filterPostMentions(tag); }');
     }
 
-    public static function addPostIdEvenWhenNoAuthor($tag)
+    public static function dummyFilter(): bool
     {
-        $post = CommentPost::find($tag->getAttribute('id'));
-
-        // Workaround for https://github.com/flarum/framework/issues/3427
-        // Flarum currently doesn't save a mention if it has no authors
-        if ($post && !$post->user) {
-            $tag->setAttribute('discussionid', (int)$post->discussion_id);
-            $tag->setAttribute('number', (int)$post->number);
-            $tag->setAttribute('displayname', '');
-
-            return true;
-        }
+        return true;
     }
 }
